@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ .Site.Title }}</title>
+  <meta name="description" content="Premium curated collections. Direct shop access.">
+  
+  <!-- Inter Font for crisp, ultra-modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg: #0d0e12;
+      --card-bg: #161820;
+      --accent: #ffffff;
+      --accent-muted: #8a8f98;
+      --btn-orange: #f25c05; /* Clean brand accent color */
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--accent);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Minimalist Hero Section */
+    header class="hero" {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 8rem 2rem 4rem 2rem;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      text-transform: uppercase;
+    }
+    .hero p {
+      color: var(--accent-muted);
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      font-weight: 300;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Asymmetric Interactive Grid */
+    .showcase-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 3rem;
+    }
+
+    .product-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+      position: relative;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .image-container {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #1f222e;
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .product-card:hover .image-container img {
+      transform: scale(1.04);
+    }
+
+    .details {
+      padding: 2rem;
+    }
+    .details h2 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .price {
+      font-size: 1.2rem;
+      color: var(--accent-muted);
+      font-weight: 300;
+      margin-bottom: 1.5rem;
+    }
+
+    /* High-Intent Outbound Button */
+    .cta-btn {
+      display: block;
+      width: 100%;
+      background: var(--accent);
+      color: var(--bg);
+      text-align: center;
+      padding: 1.1rem;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.9rem;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .cta-btn:hover {
+      background: var(--btn-orange);
+      color: var(--accent);
+    }
+
+    footer {
+      text-align: center;
+      padding: 6rem 2rem;
+      color: var(--accent-muted);
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.05em;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="hero">
+    <h1>{{ .Site.Title | default "The Edge Collection" }}</h1>
+    <p>Programmatic statement pieces curated for distinct styles. Sourced and fulfilled directly through Etsy.</p>
+  </header>
+
+  <main class="showcase-grid">
+    <!-- Hugo will loop through the JSON/TOML array data dumped by your Python script -->
+    {{ range .Site.Data.products.entries }}
+    <article class="product-card">
+      <div class="image-container">
+        <img src="{{ .image_url }}" alt="{{ .title }}" loading="lazy">
+      </div>
+      <div class="details">
+        <h2>{{ .title }}</h2>
+        <div class="price">${{ .price }}</div>
+        <a href="{{ .etsy_share_link }}" target="_blank" rel="noopener sponsored" class="cta-btn">
+          Buy on Etsy
+        </a>
+      </div>
+    </article>
+    {{ end }}
+  </main>
+
+  <footer>
+    &copy; {{ now.Year }} {{ .Site.Title }}. All catalog items link securely to our official Etsy storefront.
+  </footer>
+
+</body>
+</html>
