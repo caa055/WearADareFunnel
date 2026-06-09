@@ -147,19 +147,32 @@
   <main class="showcase-grid">
     <!-- Hugo will loop through the JSON/TOML array data dumped by your Python script -->
     {{ range .Site.Data.products.entries }}
-    <article class="product-card">
-      <div class="image-container">
-        <img src="{{ .image_url }}" alt="{{ .title }}" loading="lazy">
-      </div>
-      <div class="details">
-        <h2>{{ .title }}</h2>
-        <div class="price">${{ .price }}</div>
-        <a href="{{ .etsy_share_link }}" target="_blank" rel="noopener sponsored" class="cta-btn">
-          Buy on Etsy
-        </a>
-      </div>
-    </article>
-    {{ end }}
+	<article class="product-card" data-seo-target="{{ .seo_keyword | urlize }}">
+	  
+	  <div class="image-container">
+		<img src="{{ .image_url }}" alt="{{ .alt_tag }}" loading="lazy">
+	  </div>
+	  
+	  <div class="details">
+		<span class="seo-category-tag" style="display:block; font-size: 0.8rem; text-transform: uppercase; color: var(--btn-orange); margin-bottom: 0.5rem; font-weight: 600;">
+		  {{ .seo_keyword }}
+		</span>
+
+		<h2>{{ .title }}</h2>
+		
+		<p class="product-meta-hook" style="color: var(--accent-muted); font-size: 0.9rem; margin-top: 0.5rem; margin-bottom: 1.5rem; font-weight: 300; line-height: 1.4;">
+		  {{ .meta_hook }}
+		</p>
+
+		<div class="price">${{ .price }}</div>
+		
+		<a href="{{ .etsy_share_link }}" target="_blank" rel="noopener sponsored" class="cta-btn">
+		  Buy on Etsy
+		</a>
+	  </div>
+
+	</article>
+	{{ end }}
   </main>
 
   <footer>
